@@ -9,3 +9,5 @@ lib
 *.swp
 *.swo
 tmux-*.log
+dist/zxcvbn.js
+dist/zxcvbn.js.map
