@@ -40,7 +40,7 @@ feedback =
       when 'spatial'
         layout = match.graph.toUpperCase()
         warning = if match.turns == 1
-          'Straight rows of keys are easy to guess'
+          'Please avoid using straight rows of keys'
         else
           'Short keyboard patterns are easy to guess'
         warning: warning
@@ -50,30 +50,30 @@ feedback =
 
       when 'repeat'
         warning = if match.base_token.length == 1
-          'Repeats like "aaa" are easy to guess'
+          'Please avoid repeating letters or words.'
         else
-          'Repeats like "abcabcabc" are only slightly harder to guess than "abc"'
+          'Please avoid repeating words and characters.'
         warning: warning
         suggestions: [
           'Avoid repeated words and characters'
         ]
 
       when 'sequence'
-        warning: "Sequences like abc or 6543 are easy to guess"
+        warning: "Please avoid sequences of words or characters"
         suggestions: [
           'Avoid sequences'
         ]
 
       when 'regex'
         if match.regex_name == 'recent_year'
-          warning: "Recent years are easy to guess"
+          warning: "Please avoid recent or common years"
           suggestions: [
             'Avoid recent years'
             'Avoid years that are associated with you'
           ]
 
       when 'date'
-        warning: "Dates are often easy to guess"
+        warning: "You should avoid important dates and years"
         suggestions: [
           'Avoid dates and years that are associated with you'
         ]
@@ -82,35 +82,35 @@ feedback =
     warning = if match.dictionary_name == 'passwords'
       if is_sole_match and not match.l33t and not match.reversed
         if match.rank <= 10
-          'This is a top-10 common password'
+          'Please avoid using very common passwords'
         else if match.rank <= 100
-          'This is a top-100 common password'
+          'Please avoid using very common passwords'
         else
-          'This is a very common password'
+          'Please avoid using very common passwords'
       else if match.guesses_log10 <= 4
-        'This is similar to a commonly used password'
+        'Please avoid using very common passwords'
     else if match.dictionary_name == 'english_wikipedia'
       if is_sole_match
-        'A word by itself is easy to guess'
+        'Please avoid using a word by itself'
     else if match.dictionary_name in ['surnames', 'male_names', 'female_names']
       if is_sole_match
-        'Names and surnames by themselves are easy to guess'
+        'Please avoid using names and surnames by themselves'
       else
-        'Common names and surnames are easy to guess'
+        'Please avoid using common names and surnames'
     else
       ''
 
     suggestions = []
     word = match.token
     if word.match(scoring.START_UPPER)
-      suggestions.push "Capitalization doesn't help very much"
+      suggestions.push "Please avoid capitalization"
     else if word.match(scoring.ALL_UPPER) and word.toLowerCase() != word
-      suggestions.push "All-uppercase is almost as easy to guess as all-lowercase"
+      suggestions.push "Please avoid using all-uppercase"
 
     if match.reversed and match.token.length >= 4
-      suggestions.push "Reversed words aren't much harder to guess"
+      suggestions.push "Please avoid using reversed words"
     if match.l33t
-      suggestions.push "Predictable substitutions like '@' instead of 'a' don't help very much"
+      suggestions.push "Please avoid using predictable substitutions for letters"
 
     result =
       warning: warning
