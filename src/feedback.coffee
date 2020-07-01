@@ -42,7 +42,7 @@ feedback =
         warning = if match.turns == 1
           'Please avoid using straight rows of keys'
         else
-          'Short keyboard patterns are easy to guess'
+          'Please avoid short keyboard patterns'
         warning: warning
         suggestions: [
           'Use a longer keyboard pattern with more turns'
@@ -73,7 +73,7 @@ feedback =
           ]
 
       when 'date'
-        warning: "You should avoid important dates and years"
+        warning: "Please avoid important dates and years"
         suggestions: [
           'Avoid dates and years that are associated with you'
         ]
